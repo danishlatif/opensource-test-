@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Wonders | The Solar System & Beyond</title>
+    <style>
+        /* CSS Variables for Light Theme */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-main: #2c3e50;
+            --text-muted: #546e7a;
+            --card-bg: #ffffff;
+            --accent: #3498db;
+            --shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        header a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+            padding: 0 2rem;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            color: #1a252f;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Card Layout */
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Scroll Animation Class */
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (min-width: 900px) {
+            .card {
+                flex-direction: row;
+                height: 500px;
+            }
+            /* Alternate layout for every even card */
+            .card:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+        }
+
+        /* Image Section */
+        .card-img {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background-color: #e9ecef; /* Fallback color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.08);
+        }
+
+        /* Text Content Section */
+        .card-content {
+            flex: 1.2;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .card-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .card-content h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .card-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        /* Special Effects */
+        
+        /* Sun Glowing Effect */
+        .sun-effect img {
+            animation: sunPulse 4s infinite alternate;
+        }
+        @keyframes sunPulse {
+            0% { filter: drop-shadow(0 0 10px #f39c12) brightness(1); }
+            100% { filter: drop-shadow(0 0 30px #f1c40f) brightness(1.1); }
+        }
+
+        /* Black Hole Distort Effect */
+        .blackhole-effect {
+            background: #000;
+        }
+        .blackhole-effect img {
+            border-radius: 50%;
+            animation: spinRotate 20s linear infinite;
+            box-shadow: 0 0 50px rgba(142, 68, 173, 0.6), inset 0 0 50px rgba(41, 128, 185, 0.8);
+            transform: scale(0.8);
+        }
+        .card:hover .blackhole-effect img {
+            transform: scale(0.85); /* overrides normal hover */
+        }
+        @keyframes spinRotate {
+            from { transform: rotate(0deg) scale(0.8); }
+            to { transform: rotate(360deg) scale(0.8); }
+        }
+
+        /* Keyframes */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #fff;
+            color: var(--text-muted);
+            margin-top: 2rem;
+            border-top: 1px solid #eaeaea;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation -->
+    <header>
+        <a href="#sun">The Sun</a>
+        <a href="#mercury">Mercury</a>
+        <a href="#venus">Venus</a>
+        <a href="#earth">Earth</a>
+        <a href="#mars">Mars</a>
+        <a href="#jupiter">Jupiter</a>
+        <a href="#saturn">Saturn</a>
+        <a href="#uranus">Uranus</a>
+        <a href="#neptune">Neptune</a>
+        <a href="#blackhole">Black Hole</a>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <h1>Cosmic Wonders</h1>
+        <p>Embark on a beautifully animated journey through our Solar System and into the deep abyss of a Black Hole. Explore the light, the planets, and the absolute dark.</p>
+    </section>
+
+    <main class="container">
+
+        <!-- The Sun -->
+        <article class="card" id="sun">
+            <div class="card-img sun-effect">
+                <img src="images/sun.png" alt="The Sun">
+            </div>
+            <div class="card-content">
+                <h2>The Sun</h2>
+                <p>The Sun is the heart of our solar system, a yellow dwarf star, a hot ball of glowing gases holding the solar system together. Its gravity keeps everything from the biggest planets to the smallest particles of debris in its orbit. The connection and interactions between the Sun and Earth drive the seasons, ocean currents, weather, climate, radiation belts and auroras.</p>
+                <p>At the core of the Sun, temperatures reach a staggering 15 million degrees Celsius (27 million degrees Fahrenheit). Here, nuclear fusion takes place continuously, converting hydrogen into helium and releasing the immense amount of energy that radiates outward into the solar system, providing the heat and light necessary to sustain life on Earth.</p>
+            </div>
+        </article>
+
+                <!-- Venus -->
+        <article class="card" id="venus">
+            <div class="card-img">
+                <img src="images/Venus.png" alt="Venus">
+            </div>
+            <div class="card-content">
+                <h2>Venus</h2>
+                <p>Venus is the second planet from the Sun and is Earth's closest planetary neighbor. It's one of the four inner, terrestrial planets, and it's often called Earth's "twin" because it's similar in size and density. However, these are not identical twins. Venus has a thick, toxic atmosphere filled with carbon dioxide and it's permanently shrouded in thick, yellowish clouds of sulfuric acid.</p>
+                <p>This thick atmosphere traps heat in a runaway greenhouse effect, making it the hottest planet in our solar system with surface temperatures hot enough to melt lead. Uniquely, Venus spins slowly in the opposite direction from most planets, meaning the Sun rises in the west and sets in the east.</p>
+            </div>
+        </article>
+
+        <!-- Mercury -->
+        <article class="card" id="mercury">
+            <div class="card-img">
+                <img src="images/mercury.png" alt="Mercury">
+            </div>
+            <div class="card-content">
+                <h2>Mercury</h2>
+                <p>Mercury is the smallest planet in our solar system and the closest to the Sun. It is only slightly larger than Earth's Moon. Because it is so close to the Sun, you might expect it to be the hottest planet, but it is actually the second hottest. Mercury has almost no atmosphere to retain heat, resulting in massive temperature swings.</p>
+                <p>During the day, temperatures on Mercury's surface can reach 800 degrees Fahrenheit (430 degrees Celsius). Because the planet has no atmosphere to retain that heat, nighttime temperatures on the surface can drop to minus 290 degrees Fahrenheit (minus 180 degrees Celsius). Its surface is heavily cratered, resembling our Moon, indicating it has been geologically inactive for billions of years.</p>
+            </div>
+        </article>
+
+
+
+        <!-- Earth -->
+        <article class="card" id="earth">
+            <div class="card-img">
+                <img src="images/earth.png" alt="Earth">
+            </div>
+            <div class="card-content">
+                <h2>Earth</h2>
+                <p>Our home planet is the third planet from the Sun, and the only place we know of so far that's inhabited by living things. While Earth is only the fifth largest planet in the solar system, it is the only world in our solar system with liquid water on the surface. Just slightly larger than nearby Venus, Earth is the biggest of the four planets closest to the Sun.</p>
+                <p>Earth's atmosphere is 78 percent nitrogen, 21 percent oxygen, and 1 percent other ingredients—the perfect balance to breathe and live. Our planet is protected by a massive magnetic field, generated by its spinning iron core, which shields the planet from the harsh solar wind and cosmic radiation.</p>
+            </div>
+        </article>
+
+        <!-- Mars -->
+        <article class="card" id="mars">
+            <div class="card-img">
+                <img src="images/mars.png" alt="Mars">
+            </div>
+            <div class="card-content">
+                <h2>Mars</h2>
+                <p>Mars is the fourth planet from the Sun – a dusty, cold, desert world with a very thin atmosphere. Mars is also a dynamic planet with seasons, polar ice caps, canyons, extinct volcanoes, and evidence that it was even more active in the past. It is known as the "Red Planet" due to the iron oxide chemicals in its soil that give it a rust color.</p>
+                <p>Mars is home to Olympus Mons, the largest volcano and highest known mountain in the solar system, standing almost three times as tall as Mount Everest. It also features Valles Marineris, a massive canyon system that would stretch from New York to California. Today, it is the most heavily explored body in our solar system next to Earth.</p>
+            </div>
+        </article>
+
+        <!-- Jupiter -->
+        <article class="card" id="jupiter">
+            <div class="card-img">
+                <img src="images/jupiter.png" alt="Jupiter">
+            </div>
+            <div class="card-content">
+                <h2>Jupiter</h2>
+                <p>Jupiter is the fifth planet from the Sun and the largest in the solar system. It is a gas giant with a mass more than two and a half times that of all the other planets in the solar system combined. Jupiter's iconic Great Red Spot is a giant storm bigger than Earth that has raged for hundreds of years.</p>
+                <p>Jupiter's familiar stripes and swirls are actually cold, windy clouds of ammonia and water, floating in an atmosphere of hydrogen and helium. Jupiter has incredibly strong magnetic fields and dozens of moons, including Ganymede, which is the largest moon in the solar system and even larger than the planet Mercury.</p>
+            </div>
+        </article>
+
+        <!-- Saturn -->
+        <article class="card" id="saturn">
+            <div class="card-img">
+                <img src="images/Saturn.png" alt="Saturn">
+            </div>
+            <div class="card-content">
+                <h2>Saturn</h2>
+                <p>Saturn is the sixth planet from the Sun and the second-largest planet in our solar system. Adorned with a dazzling, complex system of icy rings, Saturn is unique among the planets. It is not the only planet to have rings, but none are as spectacular or as complex as Saturn's.</p>
+                <p>Like Jupiter, Saturn is a massive ball made mostly of hydrogen and helium. It is actually the least dense planet in our solar system; if you could find a bathtub big enough, Saturn would float in it. Saturn is also accompanied by a vast family of moons, including Titan, the second-largest moon in the solar system, which possesses a thick, hazy atmosphere.</p>
+            </div>
+        </article>
+
+        <!-- Uranus -->
+        <article class="card" id="uranus">
+            <div class="card-img">
+                <img src="images/Uranus.png" alt="Uranus">
+            </div>
+            <div class="card-content">
+                <h2>Uranus</h2>
+                <p>Uranus is the seventh planet from the Sun, and has the third-largest diameter in our solar system. It was the first planet found with the aid of a telescope. Uranus is an "ice giant"—most of its mass is a hot, dense fluid of "icy" materials (water, methane, and ammonia) above a small rocky core.</p>
+                <p>Uranus has an atmosphere made mostly of molecular hydrogen and atomic helium, with a small amount of methane. The methane is what gives Uranus its signature pale blue color. Most uniquely, Uranus rotates at a nearly 90-degree angle from the plane of its orbit, making it appear to spin on its side, resulting in extreme 21-year-long seasons.</p>
+            </div>
+        </article>
+
+        <!-- Neptune -->
+        <article class="card" id="neptune">
+            <div class="card-img">
+                <img src="images/neptune.png" alt="Neptune">
+            </div>
+            <div class="card-content">
+                <h2>Neptune</h2>
+                <p>Dark, cold, and whipped by supersonic winds, ice giant Neptune is the eighth and most distant planet in our solar system. More than 30 times as far from the Sun as Earth, Neptune is the only planet in our solar system not visible to the naked eye and the first predicted by mathematics before its discovery.</p>
+                <p>Neptune's atmosphere is made of hydrogen, helium, and methane. Like Uranus, the methane gives Neptune its color, though Neptune is a much deeper, richer blue. Despite its great distance from the sun and cold temperatures, Neptune has the most extreme winds in the solar system, reaching speeds of up to 1,200 miles per hour.</p>
+            </div>
+        </article>
+
+        <!-- Black Hole -->
+        <article class="card" id="blackhole">
+            <div class="card-img blackhole-effect">
+                <img src="images/blackhole.png" alt="A Supermassive Black Hole">
+            </div>
+            <div class="card-content">
+                <h2>Black Hole</h2>
+                <p>A black hole is a place in space where gravity pulls so much that even light cannot get out. The gravity is so strong because matter has been squeezed into an extraordinarily tiny space. This can happen when a massive star is dying. Because no light can escape them, black holes are completely invisible to the human eye; space telescopes with special tools are required to find them.</p>
+                <p>The boundary of a black hole is called the Event Horizon—the point of no return. At the very center lies the singularity, a point of infinite density where the laws of physics as we know them break down. Surrounding many black holes is an accretion disk, a glowing ring of superheated gas and dust spinning at incredible speeds before it is consumed forever.</p>
+            </div>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Abacus Club Git workshop </p>
+    </footer>
+
+    <!-- JavaScript for Scroll Animations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+           
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                       
+                        entry.target.classList.add('visible');
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
